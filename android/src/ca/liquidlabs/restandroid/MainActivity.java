@@ -4,9 +4,13 @@ import ca.liquidlabs.restandroid.model.RestCallback;
 import ca.liquidlabs.restandroid.model.User;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A Demo Activity showing how to handle REST requests
@@ -18,6 +22,8 @@ import android.widget.EditText;
 public class MainActivity extends Activity implements RestCallback {
 
 	private static EditText editText;
+	
+	private static ProgressDialog progressDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +75,14 @@ public class MainActivity extends Activity implements RestCallback {
 	@Override
 	public void preExecute() {
 		// TODO Auto-generated method stub
-		
+		this.showProgressDialog("Retreiving Your Tweets");
 	}
 
 	@Override
 	public void postExecute(String response) {
 		// TODO Auto-generated method stub
-		
+		this.hideProgressDialog();
+		Toast.makeText(this, response, Toast.LENGTH_LONG).show();		
 	}
 
 	@Override
@@ -87,7 +94,53 @@ public class MainActivity extends Activity implements RestCallback {
 	@Override
 	public void cancelExecute() {
 		// TODO Auto-generated method stub
-		
+		(User.getInstance()).cancelTask();		
 	}
+	
+	
+	/**
+	 * Shows a Progress Dialog with a Cancel Button
+	 *  
+	 * @param msg
+	 */
+	public void showProgressDialog(String msg) 
+	{
+		final RestCallback callback = this;
+		
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setIndeterminate(true);
+			progressDialog.setCancelable(false);
+			progressDialog.setMessage(msg);
+			
+			if (callback != null) {
+				progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", 
+					new Dialog.OnClickListener() {					
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							callback.cancelExecute();
+						}
+				});
+			}
+		}
+
+		
+		progressDialog.show();		
+	}	
+	
+	
+	/**
+	 * Hides the Progress Dialog
+	 */
+	public void hideProgressDialog() {
+		
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+		
+		progressDialog = null;
+	}	
+	
 
 }
