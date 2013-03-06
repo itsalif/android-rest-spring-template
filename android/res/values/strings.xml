@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RestAndroid</string>
+    <string name="action_settings">Settings</string>
+    <string name="hint_twitter_user">Enter a Twitter Username</string>
+    
+    <string name="btn_text_tweets">Get Tweets</string>
+    <string name="btn_text_upload">Upload File</string>
+
+</resources>
