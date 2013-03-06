@@ -1,17 +1,30 @@
 package ca.liquidlabs.restandroid;
 
 import ca.liquidlabs.restandroid.model.RestCallback;
+import ca.liquidlabs.restandroid.model.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
+
+/**
+ * A Demo Activity showing how to handle REST requests
+ * in a clean/organized way.
+ * 
+ * @author Abdullah Rubiyath
+ */
 
 public class MainActivity extends Activity implements RestCallback {
 
+	private static EditText editText;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		editText = (EditText) super.findViewById(R.id.input_twitter_user);
 	}
 
 	@Override
@@ -33,8 +46,16 @@ public class MainActivity extends Activity implements RestCallback {
 		
 		switch (v.getId()) {
 			case R.id.btn_tweet:
-						// handle tweets
-						break;
+				// handle tweets
+
+				// get the twitter username
+				String username = editText.getText().toString();
+				
+				/* get the user's instance and then retrieve the Tweets */
+				User user = User.getInstance();
+				user.getTweets(username, this);
+				
+				break;
 			
 			case R.id.btn_upload:
 						// upload picture

@@ -30,7 +30,7 @@ public class User {
 	 * Creates an Instance of the User 
 	 * @return The User Singleton Object
 	 */
-	public User getInstance() 
+	public static User getInstance() 
 	{
 		if (instance == null) {
 			instance = new User();
