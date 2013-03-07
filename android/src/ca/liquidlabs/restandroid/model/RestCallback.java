@@ -13,8 +13,15 @@ package ca.liquidlabs.restandroid.model;
 */
 public interface RestCallback {
 	
+	/* This should be invoked by {@link AsyncTask#onPreExecute()} on AsyncTask */
 	public void preExecute();
+	
+	/* This should be invoked by {@link AsyncTask#onPostExecute()} on AsyncTask */
 	public void postExecute(String response);
+	
+	/* This could be invoked by {@link AsyncTask#doInBackground()} on AsyncTask */
 	public String inExecute();
+	
+	/* This could be used / invoked to cancel a running AsyncTask */
 	public void cancelExecute();
 }
