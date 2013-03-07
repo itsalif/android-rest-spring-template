@@ -20,9 +20,11 @@ import android.widget.Toast;
  */
 
 public class MainActivity extends Activity implements RestCallback {
-
+	
+	// holds of the editText (which contains username)
 	private static EditText editText;
 	
+	// a progress bar - displayed when tweets are retrieved
 	private static ProgressDialog progressDialog;
 	
 	@Override
@@ -51,6 +53,7 @@ public class MainActivity extends Activity implements RestCallback {
 	public boolean onActionBtnClick(View v) {
 		
 		switch (v.getId()) {
+		
 			case R.id.btn_tweet:
 				// handle tweets
 
@@ -64,23 +67,22 @@ public class MainActivity extends Activity implements RestCallback {
 				break;
 			
 			case R.id.btn_upload:
-						// upload picture
-						break;
+				// upload picture
+				break;
 		}		
 		
-		return false;
-		
+		return false;		
 	}
 
 	@Override
 	public void preExecute() {
-		// TODO Auto-generated method stub
+		// show the progress bar
 		this.showProgressDialog("Retreiving Your Tweets");
 	}
 
 	@Override
 	public void postExecute(String response) {
-		// TODO Auto-generated method stub
+		// hide the progress bar and then show a Toast
 		this.hideProgressDialog();
 		Toast.makeText(this, response, Toast.LENGTH_LONG).show();		
 	}
@@ -93,7 +95,7 @@ public class MainActivity extends Activity implements RestCallback {
 
 	@Override
 	public void cancelExecute() {
-		// TODO Auto-generated method stub
+		// Cancel The Task
 		(User.getInstance()).cancelTask();		
 	}
 	
@@ -107,10 +109,16 @@ public class MainActivity extends Activity implements RestCallback {
 	{
 		final RestCallback callback = this;
 		
+		// check for existing progressDialog
 		if (progressDialog == null) {
+			// create a progress Dialog
 			progressDialog = new ProgressDialog(this);
+
+			// remove the ability to hide it by tapping back button
 			progressDialog.setIndeterminate(true);
+			
 			progressDialog.setCancelable(false);
+			
 			progressDialog.setMessage(msg);
 			
 			if (callback != null) {
@@ -118,14 +126,14 @@ public class MainActivity extends Activity implements RestCallback {
 					new Dialog.OnClickListener() {					
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
+							// Cancel the Task when user hits Cancel Button
 							callback.cancelExecute();
 						}
 				});
 			}
 		}
 
-		
+		// now display it.
 		progressDialog.show();		
 	}	
 	
