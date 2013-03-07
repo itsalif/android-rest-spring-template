@@ -14,8 +14,4 @@ The online Tutorial can be read here:
 Credits 
 ============================================
 
-Author: Abdullah Rubiyath
-<br />
-The code is licensed under MIT License.
-<br />
-Copyright (c) 2013 Liquid Labs Inc.
+Author: Abdullah Rubiyath <http://itsalif.info>
